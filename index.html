@@ -32,17 +32,6 @@
       display: block;
     }
 
-    #infoImage {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: auto;
-      display: none;
-      background: transparent;
-      z-index: 2;
-    }
-
     .click-area {
       position: absolute;
       background: transparent;
@@ -68,39 +57,49 @@
     <!-- MAP IMAGE -->
     <img id="mapImage" src="Images/crops.jpeg" alt="Map">
 
-    <button class="info-switch" id="switch-1"
-      style="top:75%; left:70%; width:20%; height:10%;"
-      data-num="1">
-    </button>
-
-    <button class="info-switch" id="switch-2"
-      style="top:75%; left:40%; width:20%; height:10%;"
-      data-num="2">
-    </button>
-
-    <button class="info-switch" id="switch-3"
-      style="top:75%; left:10%; width:20%; height:10%;"
-      data-num="3">
-    </button>
-
     <button class="click-area"
-      style="top:49%; left:25%; width:13%; height:7%;"
-      data-prefix="scientist">
-    </button>
-
-    <button class="click-area"
-      style="top:33%; left:24%; width:13%; height:7%;"
-      data-prefix="graves">
-    </button>
-
-    <button class="click-area"
-      style="top:62%; left:41%; width:13%; height:7%;"
+      style="top:80%; left:54%; width:17%; height:15%;"
       data-prefix="crops">
     </button>
 
     <button class="click-area"
-      style="top:55%; left:72%; width:13%; height:7%;"
-      data-prefix="loc">
+      style="top:80%; left:30%; width:17%; height:15%;"
+      data-prefix="graves">
+    </button>
+
+    <button class="click-area"
+      style="top:80%; left:9%; width:15%; height:15%;"
+      data-prefix="scientist">
+    </button>
+
+    <button class="click-area"
+      style="top:80%; left:75%; width:15%; height:15%;"
+      data-prefix="loc_1">
+    </button>
+
+    <button class="info-switch" id="switch-back"
+      style="top:5%; left:90%; width:20%; height:10%;"
+      data-num="0">
+    </button>
+
+        <button class="info-switch" id="switch-1"
+      style="top:5%; left:70%; width:20%; height:10%;"
+      data-num="1">
+    </button>
+
+        <button class="info-switch" id="switch-2"
+      style="top:5%; left:50%; width:20%; height:10%;"
+      data-num="2">
+    </button>
+
+        <button class="info-switch" id="switch-3"
+      style="top:5%; left:30%; width:20%; height:10%;"
+      data-num="3">
+    </button>
+
+        <button class="info-switch" id="switch-foward"
+      style="top:5%; left:10%; width:20%; height:10%;"
+      data-num="4">
     </button>
 
   </div>
@@ -109,19 +108,22 @@
     const mapImage = document.getElementById("mapImage");
 
     const switches = {
-      middle: document.getElementById("switch-1"),
-      west: document.getElementById("switch-2"),
-      north: document.getElementById("switch-3"),
+      sBack : document.getElementById("switch-back"),
+      s1: document.getElementById("switch-1"),
+      s2: document.getElementById("switch-2"),
+      s3: document.getElementById("switch-3"),
+      sFoward : document.getElementById("switch-foward"),
     };
 
     let currentPrefix = "";
-    let currentNum = "";
+    let page = 1;
 
     document.querySelectorAll(".click-area").forEach(btn => {
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
-        currentNum = "";
         currentPrefix = this.dataset.prefix;
+        if(currentPrefix == "loc_1"){Object.values(switches).forEach(s => s.style.display = "block");switches[0].style.display = "none";}
+        else{Object.values(switches).forEach(s => s.style.display = "none");}
         showImage();
       });
     });
@@ -129,24 +131,28 @@
     document.querySelectorAll(".info-switch").forEach(btn => {
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
-        currentNum = this.dataset.num;
+        if(this.dataset.num == "0"){page-=1;currentPrefix = "loc_" + (3 * page).toString();if(page == 4){switches[4].style.display = "block";}}
+        else 
+        {
+          if(this.dataset.num == "4"){page+=1;currentPrefix = "loc_" + (1 * page).toString();if(page == 5){switches[4].style.display = "none";}}
+          else{currentPrefix = "loc_" + (parseInt(this.dataset.num) * page).toString();}
+        }
+
         showImage();
       });
     });
 
     function showImage() {
-      infoImage.src = `Images/${currentPrefix}${currentNum}.jpeg`;
+      mapImage.src = `Images/${currentPrefix}.jpeg`; 
+
+      infoImage.style.display = "block";
+      infoArea.style.display = "block";
+      overlay.style.display = "block";
       Object.values(switches).forEach(s => s.style.display = "block");
       e.stopPropagation();
     }
-
-    infoImage.addEventListener("click", function () {
-      Object.values(switches).forEach(s => s.style.display = "none");
-    });
   </script>
 
 </body>
 
 </html>
-
-
