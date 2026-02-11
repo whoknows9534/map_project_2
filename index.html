@@ -43,28 +43,11 @@
       z-index: 2;
     }
 
-    #overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      z-index: 1;
-    }
-
     .click-area {
       position: absolute;
       background: transparent;
       border: none;
       cursor: pointer;
-    }
-
-    .info-area {
-      position: absolute;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      display: none;
-      z-index: 3;
     }
 
     .info-switch {
@@ -85,10 +68,6 @@
     <!-- MAP IMAGE -->
     <img id="mapImage" src="Images/crops.jpeg" alt="Map">
 
-    <button class="info-area" id="infoarea"
-      style="top:10%; left:10%; width:81%; height:75%;">
-    </button>
-
     <button class="info-switch" id="switch-1"
       style="top:75%; left:70%; width:20%; height:10%;"
       data-num="1">
@@ -105,37 +84,29 @@
     </button>
 
     <button class="click-area"
-      style="top:47.5%; left:45%; width:13%; height:7%;"
-      data-prefix="middle">
-    </button>
-
-    <button class="click-area"
       style="top:49%; left:25%; width:13%; height:7%;"
-      data-prefix="west">
+      data-prefix="scientist">
     </button>
 
     <button class="click-area"
       style="top:33%; left:24%; width:13%; height:7%;"
-      data-prefix="north">
+      data-prefix="graves">
     </button>
 
     <button class="click-area"
       style="top:62%; left:41%; width:13%; height:7%;"
-      data-prefix="south">
+      data-prefix="crops">
     </button>
 
     <button class="click-area"
       style="top:55%; left:72%; width:13%; height:7%;"
-      data-prefix="east">
+      data-prefix="loc">
     </button>
 
   </div>
 
   <script>
     const mapImage = document.getElementById("mapImage");
-    const infoImage = document.getElementById("infoImage");
-    const infoArea = document.getElementById("infoarea");
-    const overlay = document.getElementById("overlay");
 
     const switches = {
       middle: document.getElementById("switch-1"),
@@ -144,12 +115,12 @@
     };
 
     let currentPrefix = "";
-    let currentNum = "1";
+    let currentNum = "";
 
     document.querySelectorAll(".click-area").forEach(btn => {
       btn.addEventListener("click", function (e) {
         e.stopPropagation();
-        currentNum = "1";
+        currentNum = "";
         currentPrefix = this.dataset.prefix;
         showImage();
       });
@@ -164,22 +135,12 @@
     });
 
     function showImage() {
-      if (currentPrefix == "east" && currentNum == "3") {infoImage.src = "Images/east_4.PNG"; }
-      else { infoImage.src = `Images/${currentPrefix}_${currentNum}.PNG`; }
-
-      infoImage.style.display = "block";
-      infoArea.style.display = "block";
-      overlay.style.display = "block";
+      infoImage.src = `Images/${currentPrefix}${currentNum}.jpeg`;
       Object.values(switches).forEach(s => s.style.display = "block");
       e.stopPropagation();
     }
 
-    infoArea.addEventListener("click", function (e) { e.stopPropagation(); });
-
     infoImage.addEventListener("click", function () {
-      infoImage.style.display = "none";
-      overlay.style.display = "none";
-      infoArea.style.display = "none";
       Object.values(switches).forEach(s => s.style.display = "none");
     });
   </script>
@@ -187,4 +148,5 @@
 </body>
 
 </html>
+
 
