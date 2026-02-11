@@ -78,7 +78,7 @@
     </button>
 
     <button class="info-switch" id="switch-back"
-      style="top:5%; left:90%; width:5%; height:10%;"
+      style="top:5%; left:80%; width:7%; height:10%;"
       data-num="0">
     </button>
 
@@ -98,7 +98,7 @@
     </button>
 
         <button class="info-switch" id="switch-foward"
-      style="top:5%; left:3%; width:5%; height:10%;"
+      style="top:5%; left:3%; width:7%; height:10%;"
       data-num="4">
     </button>
 
@@ -134,7 +134,7 @@
         if(this.dataset.num == "0"){page-=1;currentPrefix = "loc_" + (3 * page).toString();if(page == 4){switches[4].style.display = "block";}}
         else 
         {
-          if(this.dataset.num == "4"){page+=1;currentPrefix = "loc_" + (1 * page).toString();if(page == 5){switches[4].style.display = "none";}}
+          if(this.dataset.num == "4"){page+=1;currentPrefix = "loc_" + ((3 * page) - 2).toString();if(page == 5){switches[4].style.display = "none";}}
           else{currentPrefix = "loc_" + (parseInt(this.dataset.num) * page).toString();}
         }
 
@@ -155,5 +155,6 @@
 </body>
 
 </html>
+
 
 
